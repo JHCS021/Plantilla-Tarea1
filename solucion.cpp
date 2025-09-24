@@ -17,14 +17,45 @@ JUEGO_EN_CURSO: Si el juego aún no se ha terminado.
 */
 int GetEstado()
 {
-    /*
-    Puedes acceder a las casillas del tablero mediante el arreglo de 
-    dos dimensiones tablero.  
-
-    Los índices empiezan en cero, de modo que puedes acceder a la segunda fila, primera columna 
-    de la siguiente manera:
-    tablero[1][0]
-    */
     char** tablero = GetTablero();
-    return JUEGO_EN_CURSO;
+    
+    // Verificar si hay un ganador
+    for (int i = 0; i < 3; i++) {
+        // Verificar filas
+        if (tablero[i][0] != '_' && tablero[i][0] == tablero[i][1] && tablero[i][1] == tablero[i][2]) {
+            return tablero[i][0] == 'X' ? GANO_X : GANO_O;
+        }
+        // Verificar columnas
+        if (tablero[0][i] != '_' && tablero[0][i] == tablero[1][i] && tablero[1][i] == tablero[2][i]) {
+            return tablero[0][i] == 'X' ? GANO_X : GANO_O;
+        }
+    }
+
+    // Verificar diagonales
+    if (tablero[1][1] != '_') {
+        if (tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2]) {
+            return tablero[1][1] == 'X' ? GANO_X : GANO_O;
+        }
+        if (tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0]) {
+            return tablero[1][1] == 'X' ? GANO_X : GANO_O;
+        }
+    }
+    
+    // Contar casillas vacias para determinar si hay empate o el juego continua
+    bool hayCasillasVacias = false;
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (tablero[i][j] == '_') {
+                hayCasillasVacias = true;
+                break;
+            }
+        }
+        if(hayCasillasVacias) break;
+    }
+
+    if (hayCasillasVacias) {
+        return JUEGO_EN_CURSO;
+    } else {
+        return EMPATE;
+    }
 }
