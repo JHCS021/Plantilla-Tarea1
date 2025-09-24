@@ -11,12 +11,14 @@ using namespace std;
 int main()
 {
     IniciarTablero();
+    int estado;
     do
     {
         DesplegarTablero();
         CapturarJugada();
-    }while (GetEstado() == JUEGO_EN_CURSO);
-    switch(GetEstado())
+        estado = GetEstado();
+    }while (estado == JUEGO_EN_CURSO);
+    switch(estado)
     {
         case GANO_X:
             cout << endl << "Ha ganado el jugador X" << endl;

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include "logica.h"
 
 using namespace std;
@@ -25,11 +26,6 @@ void IniciarTablero()
 
 void Jugar(char jugador, int fila, int columna)
 {
-    if(tablero[fila][columna] != '_')
-    {
-        cout << "\nEsta casilla no está disponible\n" << endl;
-        return;
-    }
     tablero[fila][columna] = jugador;
     jugadorActual = jugadorActual == 'X' ? 'O' : 'X';
 }
@@ -49,12 +45,26 @@ void DesplegarTablero()
 void CapturarJugada()
 {
     int fila, columna;
-    cout << endl << "Introduzca la fila (de 0 a 2) donde jugará el jugador " << jugadorActual << endl;
-    cin >> fila;
-    cout << "Introduzca la columna (de 0 a 2) donde jugará el jugador " << jugadorActual << endl;
-    cin >> columna;
-    Jugar(jugadorActual, fila, columna);
+    while (true) {
+        cout << endl << "Introduzca la fila (de 0 a 2) donde jugará el jugador " << jugadorActual << endl;
+        cin >> fila;
+        cout << "Introduzca la columna (de 0 a 2) donde jugará el jugador " << jugadorActual << endl;
+        cin >> columna;
 
+        if (cin.fail()) {
+            cout << "\nEntrada no válida. Por favor, introduzca números.\n" << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (fila >= 0 && fila < 3 && columna >= 0 && columna < 3 && tablero[fila][columna] == '_') {
+            Jugar(jugadorActual, fila, columna);
+            break;
+        } else {
+            cout << "\nEntrada no válida o la casilla ya está ocupada. Inténtelo de nuevo.\n" << endl;
+        }
+    }
 }
 
 void LiberarTablero()

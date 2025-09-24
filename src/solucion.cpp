@@ -32,13 +32,11 @@ int GetEstado()
     }
 
     // Verificar diagonales
-    if (tablero[1][1] != '_') {
-        if (tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2]) {
-            return tablero[1][1] == 'X' ? GANO_X : GANO_O;
-        }
-        if (tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0]) {
-            return tablero[1][1] == 'X' ? GANO_X : GANO_O;
-        }
+    if (tablero[0][0] != '_' && tablero[0][0] == tablero[1][1] && tablero[1][1] == tablero[2][2]) {
+        return tablero[0][0] == 'X' ? GANO_X : GANO_O;
+    }
+    if (tablero[0][2] != '_' && tablero[0][2] == tablero[1][1] && tablero[1][1] == tablero[2][0]) {
+        return tablero[0][2] == 'X' ? GANO_X : GANO_O;
     }
     
     // Contar casillas vacias para determinar si hay empate o el juego continua
