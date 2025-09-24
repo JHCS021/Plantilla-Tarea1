@@ -56,3 +56,16 @@ void CapturarJugada()
     Jugar(jugadorActual, fila, columna);
 
 }
+
+void LiberarTablero()
+{
+    if (tablero != NULL)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            delete[] tablero[i];
+        }
+        delete[] tablero;
+        tablero = NULL;
+    }
+}

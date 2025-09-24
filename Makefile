@@ -1,9 +1,14 @@
-SRC=solucion.cpp \
-	logica.cpp \
+CC=g++
+CFLAGS=-Iinclude -g
 
-OBJ=solucion.o \
-	logica.o
+SRC=$(wildcard src/*.cpp)
+OBJ=$(SRC:.cpp=.o)
 
-all:
-	g++ -c ${SRC}
-	g++ ${OBJ} main.cpp -g -o main
+all: main
+
+main: $(OBJ)
+	$(CC) $(CFLAGS) -o main $(OBJ)
+
+.PHONY: clean
+clean:
+	rm -f src/*.o main

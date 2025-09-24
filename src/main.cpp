@@ -31,5 +31,8 @@ int main()
     cout << endl << endl;
     DesplegarTablero();
     cout << endl << endl;
+
+    LiberarTablero();
+
     return 0;
 }
